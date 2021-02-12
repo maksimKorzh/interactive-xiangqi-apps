@@ -81,7 +81,7 @@ function drawBoard() {
       let square = rank * 11 + file;
       let piece = engine.getPiece(square);
       var pieceImage = '<img style="width: ' + PIECE_WIDTH + 'px" draggable="true"';
-      pieceImage += 'src="game/images/' + pieceFolder + '/' + piece + '.svg"></img>';
+      pieceImage += 'src="game/images/' + pieceFolder + '/' + piece + '.png"></img>';
 
       if (engine.squareToString(square) != 'xx') {
         chessBoard += 
@@ -114,8 +114,11 @@ function highlightMoves(square) {
     let targetSquare = engine.getTargetSquare(move);
     if (square == sourceSquare) {
       let parent = document.getElementById(targetSquare);
-      parent.style.backgroundSize = CELL_WIDTH + 'px';
+      parent.style.backgroundSize = (CELL_WIDTH - 4) + 'px';
+      parent.style.backgroundRepeat = 'no-repeat';
+      parent.style.backgroundPosition = 'center';
       parent.style.backgroundImage = 'url("game/images/misc/legal_move.png")';
+
       parent.style.opacity = '0.50';
       if (parent.childNodes.length) {
         parent.childNodes[0].style.opacity = '0.5';
@@ -533,16 +536,13 @@ function setPuzzle(puzzleId) {
 
 // init board size
 function setBoardSize(width) {
-  CELL_WIDTH = width / 9;
-  CELL_HEIGHT = CELL_WIDTH;
-  PIECE_WIDTH = CELL_HEIGHT - 2;
+  PIECE_WIDTH = width / 9;
+  CELL_WIDTH = PIECE_WIDTH + 2;
+  CELL_HEIGHT = PIECE_WIDTH + 0;
   
   let frameWidth = (CELL_WIDTH * 9);
-  let frameHeight = (CELL_WIDTH * 10);
+  let frameHeight = (CELL_HEIGHT * 10);
   
-  document.getElementById('xiangqiboard').style.width = frameWidth + 'px';
-  document.getElementById('puzzles').style.width = frameWidth + 'px';
-  document.getElementById('pgn').style.width = frameWidth + 'px';
   document.getElementById('dropdown-css').innerHTML = `
     .scrollable-menu {
       height: ` + (frameHeight + 8) + `px;
@@ -574,7 +574,7 @@ function addPuzzle(count) {
   for (let count = 0; count < Puzzles.length; count++) addPuzzle(count);
 }());
 
-setBoardSize(250);
+setBoardSize(220);  // 236
 setPuzzle('puzzle_0');
 
 

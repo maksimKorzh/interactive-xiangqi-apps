@@ -43,9 +43,9 @@ const MOVE_SOUND = new Audio('game/sounds/move.wav');
 const CAPTURE_SOUND = new Audio('game/sounds/capture.wav');
 
 // square size
-var CELL_WIDTH = 46;
-var CELL_HEIGHT = 46;
-var PIECE_WIDTH = 44;
+var CELL_WIDTH;
+var CELL_HEIGHT;
+var PIECE_WIDTH;
 
 // select color
 const SELECT_COLOR = 'brown';
@@ -536,10 +536,18 @@ function setPuzzle(puzzleId) {
 function setBoardSize(width) {
   PIECE_WIDTH = width / 9;
   CELL_WIDTH = PIECE_WIDTH;
-  CELL_HEIGHT = PIECE_WIDTH;
+  CELL_HEIGHT = PIECE_WIDTH + 2;
   
   let frameWidth = (CELL_WIDTH * 9);
   let frameHeight = (CELL_HEIGHT * 10);
+  
+  let pickPuzzle = document.getElementById('pickPuzzle');
+  pickPuzzle.style.fontSize = (CELL_WIDTH / 2.5) + 'px';
+  if (window.location.href.includes('pickPuzzle') == 0) pickPuzzle.setAttribute('hidden', 'True');
+  
+  let pgn = document.getElementById('pgn')
+  pgn.style.fontSize = (CELL_WIDTH / 2.5) + 'px';
+  if (window.location.href.includes('pgn') == 0) pgn.setAttribute('hidden', 'True');
   
   document.getElementById('dropdown-css').innerHTML = `
     .scrollable-menu {
@@ -568,15 +576,6 @@ function initPuzzles() {
   let mateIn = window.location.href.split('mateIn=')[1];
   let mateDbIndex = (mateIn != undefined) ? parseInt(mateIn) : 1;
   Puzzles = PuzzlesDb[mateDbIndex];
-  
-  let pickPuzzle = document.getElementById('pickPuzzle');
-  //pickPuzzle.innerHTML = 'Mate in ' + mateDbIndex + ' puzzles ';
-  pickPuzzle.style.fontSize = (CELL_WIDTH / 2.5) + 'px';
-  if (window.location.href.includes('pickPuzzle') == 0) pickPuzzle.setAttribute('hidden', 'True');
-  
-  let pgn = document.getElementById('pgn')
-  pgn.style.fontSize = (CELL_WIDTH / 2.5) + 'px';
-  if (window.location.href.includes('pgn') == 0) pgn.setAttribute('hidden', 'True');
 
   let puzzles = document.getElementById('puzzles');
   for (let count = 0; count < Puzzles.length; count++) addPuzzle(count);

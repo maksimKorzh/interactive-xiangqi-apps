@@ -538,15 +538,15 @@ function setPuzzle(puzzleId) {
 function setBoardSize(width) {
   PIECE_WIDTH = width / 9;
   CELL_WIDTH = PIECE_WIDTH + 2;
-  CELL_HEIGHT = PIECE_WIDTH + 0;
+  CELL_HEIGHT = PIECE_WIDTH;
   
   let frameWidth = (CELL_WIDTH * 9);
   let frameHeight = (CELL_HEIGHT * 10);
   
   document.getElementById('dropdown-css').innerHTML = `
     .scrollable-menu {
-      height: ` + frameHeight + `px;
-      max-height: ` +  frameHeight + `px;
+      height: ` + (frameHeight / 3.8) + `px;
+      max-height: ` +  (frameHeight / 3.8) + `px;
       overflow-x: hidden;
     }
   `;
@@ -557,7 +557,7 @@ function addPuzzle(count) {
   let puzzle = Puzzles[count];
   let puzzleItem = document.createElement('li');
   puzzleItem.id = 'puzzle_' + count;
-  puzzleItem.style.fontSize = '12px';
+  puzzleItem.style.fontSize = (CELL_WIDTH / 3) + 'px';
   puzzleItem.classList.add('list-group-item-action');
   puzzleItem.classList.add('btn');
   puzzleItem.textContent = (count + 1) + '. ' + puzzle['title'];
@@ -566,18 +566,22 @@ function addPuzzle(count) {
 }
 
 // init game list
-(function initPuzzles() {
+function initPuzzles() {
   let mateIn = window.location.href.split('mateIn=')[1];
   let mateDbIndex = (mateIn != undefined) ? parseInt(mateIn) : 1;
   Puzzles = PuzzlesDb[mateDbIndex];
   document.getElementById('pickPuzzle').innerHTML = 'Mate in ' + mateDbIndex + ' puzzles ';
+  document.getElementById('pickPuzzle').style.fontSize = (CELL_WIDTH / 2.5) + 'px';
+  document.getElementById('pgn').style.fontSize = (CELL_WIDTH / 2.5) + 'px';
+
   let puzzles = document.getElementById('puzzles');
   for (let count = 0; count < Puzzles.length; count++) addPuzzle(count);
-}());
+}
 
 
 let boardSize = window.location.href.split('boardSize=')[1];
 setBoardSize(parseInt(boardSize) ? parseInt(boardSize) : 220);
+initPuzzles();
 setPuzzle('puzzle_0');
 
 

@@ -545,8 +545,8 @@ function setBoardSize(width) {
   
   document.getElementById('dropdown-css').innerHTML = `
     .scrollable-menu {
-      height: ` + (frameHeight + 8) + `px;
-      max-height: ` +  (frameHeight + 8) + `px;
+      height: ` + frameHeight + `px;
+      max-height: ` +  frameHeight + `px;
       overflow-x: hidden;
     }
   `;
@@ -567,14 +567,17 @@ function addPuzzle(count) {
 
 // init game list
 (function initPuzzles() {
-  let mateDbIndex = parseInt(window.location.href.split('#mate-in-')[1]);
+  let mateIn = window.location.href.split('mateIn=')[1];
+  let mateDbIndex = (mateIn != undefined) ? parseInt(mateIn) : 1;
   Puzzles = PuzzlesDb[mateDbIndex];
   document.getElementById('pickPuzzle').innerHTML = 'Mate in ' + mateDbIndex + ' puzzles ';
   let puzzles = document.getElementById('puzzles');
   for (let count = 0; count < Puzzles.length; count++) addPuzzle(count);
 }());
 
-setBoardSize(220);  // 236
+
+let boardSize = window.location.href.split('boardSize=')[1];
+setBoardSize(parseInt(boardSize) ? parseInt(boardSize) : 220);
 setPuzzle('puzzle_0');
 
 

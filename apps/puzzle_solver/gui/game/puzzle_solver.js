@@ -543,6 +543,8 @@ function setBoardSize(width) {
   
   let pickPuzzle = document.getElementById('pickPuzzle');
   pickPuzzle.style.fontSize = (CELL_WIDTH / 2.5) + 'px';
+  pickPuzzle.innerHTML = 'Mate in ' + (window.location.href.includes('mateIn') ?
+                                     parseInt(window.location.href.split('mateIn=')[1]) : 1);
   if (window.location.href.includes('pickPuzzle') == 0) pickPuzzle.setAttribute('hidden', 'True');
   
   let pgn = document.getElementById('pgn')

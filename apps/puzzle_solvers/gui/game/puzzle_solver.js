@@ -583,8 +583,9 @@ function initPuzzles() {
 }
 
 
-let boardSize = window.location.href.split('boardSize=')[1];
-setBoardSize(parseInt(boardSize) ? parseInt(boardSize) : 250);
+let boardSize =parseInt(window.location.href.split('boardSize=')[1]);
+if (boardSize >= 350) document.getElementById('xiangqiboard').style.backgroundImage = 'url("game/images/boards/board-ccbridge.png")';
+setBoardSize(boardSize ? boardSize : 250);
 initPuzzles();
 setPuzzle('puzzle_0');
 

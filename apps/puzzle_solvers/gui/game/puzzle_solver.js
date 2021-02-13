@@ -85,7 +85,7 @@ function drawBoard() {
 
       if (engine.squareToString(square) != 'xx') {
         chessBoard += 
-          '<td align="center" id="' + square + 
+          '<td id="' + square + 
           '" width="' + CELL_WIDTH + 'px" height="' + CELL_HEIGHT +  'px" ' +
           ' onclick="tapPiece(this.id)" ' + 
           ' ondragstart="dragPiece(event, this.id)" ' +
@@ -103,9 +103,7 @@ function drawBoard() {
 }
 
 // highlight legal moves
-function highlightMoves(square) {  
-  //if (document.getElementById('showMoves').checked == false) return;
-  
+function highlightMoves(square) {
   let legalMoves = engine.generateLegalMoves();
   
   for (let count = 0; count < legalMoves.length; count++) {
@@ -537,7 +535,7 @@ function setPuzzle(puzzleId) {
 // init board size
 function setBoardSize(width) {
   PIECE_WIDTH = width / 9;
-  CELL_WIDTH = PIECE_WIDTH + 2;
+  CELL_WIDTH = PIECE_WIDTH;
   CELL_HEIGHT = PIECE_WIDTH;
   
   let frameWidth = (CELL_WIDTH * 9);
@@ -570,9 +568,15 @@ function initPuzzles() {
   let mateIn = window.location.href.split('mateIn=')[1];
   let mateDbIndex = (mateIn != undefined) ? parseInt(mateIn) : 1;
   Puzzles = PuzzlesDb[mateDbIndex];
-  document.getElementById('pickPuzzle').innerHTML = 'Mate in ' + mateDbIndex + ' puzzles ';
-  document.getElementById('pickPuzzle').style.fontSize = (CELL_WIDTH / 2.5) + 'px';
-  document.getElementById('pgn').style.fontSize = (CELL_WIDTH / 2.5) + 'px';
+  
+  let pickPuzzle = document.getElementById('pickPuzzle');
+  //pickPuzzle.innerHTML = 'Mate in ' + mateDbIndex + ' puzzles ';
+  pickPuzzle.style.fontSize = (CELL_WIDTH / 2.5) + 'px';
+  if (window.location.href.includes('pickPuzzle') == 0) pickPuzzle.setAttribute('hidden', 'True');
+  
+  let pgn = document.getElementById('pgn')
+  pgn.style.fontSize = (CELL_WIDTH / 2.5) + 'px';
+  if (window.location.href.includes('pgn') == 0) pgn.setAttribute('hidden', 'True');
 
   let puzzles = document.getElementById('puzzles');
   for (let count = 0; count < Puzzles.length; count++) addPuzzle(count);
@@ -580,7 +584,7 @@ function initPuzzles() {
 
 
 let boardSize = window.location.href.split('boardSize=')[1];
-setBoardSize(parseInt(boardSize) ? parseInt(boardSize) : 220);
+setBoardSize(parseInt(boardSize) ? parseInt(boardSize) : 250);
 initPuzzles();
 setPuzzle('puzzle_0');
 

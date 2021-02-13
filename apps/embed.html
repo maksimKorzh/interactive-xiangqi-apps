@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Xiangqi - play vs computer</title>
+    
+    <!-- Encoding -->
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    
+    <!-- SEO -->
+    <meta name="description" content="Didactic Chinese chess Xiangqi engine by Code Monkey King">
+    <meta name="keywords" content="play xiangqi online chinese chess engine javascript">
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="play_online/gui/libs/css/bootstrap.min.css">
+    <script src="play_online/gui/libs/js/jquery.min.js"></script>
+    <script src="play_online/gui/libs/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Analytics -->
+    <script type="text/javascript">
+      if (window.location.href.includes('github')) {
+        $.post('https://maksimkorzh.pythonanywhere.com/analytics/api/post', {
+          date: new Date,
+          url: window.location.href
+        });
+      }
+    </script>
+    
+  </head>
+  
+  <body>
+    <div class="col text-center mt-4">
+      <hr>
+      <h3>Embedded interactive Xiangqi apps</h3>
+      <hr>
+      <hr>
+      
+      <div class="row">
+        
+        <div class="col">
+          <h4>Play board, no controls</h4>
+          <hr>
+          
+          <!-- Play Xiangqi (default board size, no controls) -->
+          <div class="col">
+            <div align="center">
+              <iframe id="inlineFrameExample"
+                title="Inline Frame Example"
+                width="272"
+                height="302"
+                style="border: 0px solid white"
+                src="https://maksimkorzh.github.io/interactive-xiangqi-apps/apps/play_online/gui/xiangqi.html">
+              </iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <h4>Puzzle board and controls</h4>
+          <hr>
+          
+          <!-- Play Xiangqi (default board size, controls) -->
+          <div align="center">
+            <iframe id="inlineFrameExample"
+              title="Inline Frame Example"
+              width="272"
+              height="337"
+              style="border: 0px solid white"
+              src="https://maksimkorzh.github.io/interactive-xiangqi-apps/apps/puzzle_solver/gui/puzzle_solver.html">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+
+
+

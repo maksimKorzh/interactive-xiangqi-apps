@@ -1,6 +1,7 @@
 # Interactive Xiangqi apps
-Embedded Xiangqi apps for http://www.xqinenglish.com/ website by Fang Hao Jian
-More details coming soon...
+It all has started from writing a <a href="https://github.com/maksimKorzh/wukong-xiangqi">Xiangqi engine</a>.<br>
+Later I've adopted the apps based on it to fit <a href="http://www.xqinenglish.com/">Xiangqi in English</a> website by Fang Hao Jian.
+Now it's available for free use in 3rd party websites.
 
 # Code snippets to Xiangqi embed diagrams
 <a href="https://maksimkorzh.github.io/interactive-xiangqi-apps/apps/embed.html">See demo</a>
@@ -41,3 +42,5 @@ More details coming soon...
       src="https://maksimkorzh.github.io/interactive-xiangqi-apps/apps/puzzle_solver/gui/puzzle_solver.html?boardSize=350&mateIn=3&pickPuzzle">
     </iframe>
 
+# Contact developer
+freesoft.for.people@gmail.com - Code Monkey King

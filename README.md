@@ -3,7 +3,7 @@ It all has started from writing a <a href="https://github.com/maksimKorzh/wukong
 Later I've adopted the apps based on it to fit <a href="http://www.xqinenglish.com/">Xiangqi in English</a> website by Fang Hao Jian.<br>
 Now it's available for free use in 3rd party websites.
 
-# Code snippets to embed Xiangqi diagrams into your website
+# Code snippets to embed Xiangqi diagrams
 <a href="https://maksimkorzh.github.io/interactive-xiangqi-apps/apps/embed.html">See demo</a>
 
     <!-- Play board, no controls -->

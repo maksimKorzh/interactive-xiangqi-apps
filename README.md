@@ -80,4 +80,4 @@ Now it's available for free use in 3rd party websites.
 
 
 # Contact developer
-freesoft.for.people@gmail.com - Code Monkey King
+freesoft.for.people@gmail.com

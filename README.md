@@ -66,7 +66,7 @@ Now it's available for free use in 3rd party websites.
       width="425"
       height="600"
       style="border: 0px solid white"
-      src="https://maksimkorzh.github.io/wukong-xiangqi/src/gui/xiangqi.html">
+      src="https://maksimkorzh.github.io/interactive-xiangqi-apps/apps/wukong-dev/gui/xiangqi.html">
     </iframe>    
 
     <!-- Game viewer, developer version -->

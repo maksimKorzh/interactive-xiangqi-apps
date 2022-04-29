@@ -94,6 +94,23 @@ var Engine = function() {
       'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx'
     ];
     
+    const COORDINATES_DPXQ = [
+      'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 
+      'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 
+      'xx', '00', '10', '20', '30', '40', '50', '60', '70', '80', 'xx', 
+      'xx', '01', '11', '21', '31', '41', '51', '61', '71', '81', 'xx', 
+      'xx', '02', '12', '22', '32', '42', '52', '62', '72', '82', 'xx', 
+      'xx', '03', '13', '23', '33', '43', '53', '63', '73', '83', 'xx', 
+      'xx', '04', '14', '24', '34', '44', '54', '64', '74', '84', 'xx', 
+      'xx', '05', '15', '25', '35', '45', '55', '65', '75', '85', 'xx', 
+      'xx', '06', '16', '26', '36', '46', '56', '66', '76', '86', 'xx', 
+      'xx', '07', '17', '27', '37', '47', '57', '67', '77', '87', 'xx', 
+      'xx', '08', '18', '28', '38', '48', '58', '68', '78', '88', 'xx', 
+      'xx', '09', '19', '29', '39', '49', '59', '69', '79', '89', 'xx', 
+      'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 
+      'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx', 'xx'
+    ];
+    
     
     /****************************\
      ============================
@@ -425,6 +442,17 @@ var Engine = function() {
     function moveToString(move) {
       return COORDINATES[getSourceSquare(move)] +
              COORDINATES[getTargetSquare(move)]
+    }
+    
+    // DPXQ move
+    function moveToDPXQ(move) {
+      return COORDINATES_DPXQ[getSourceSquare(move)] +
+             COORDINATES_DPXQ[getTargetSquare(move)]
+    }
+    
+    // DPXQ position code (piece list)
+    function dpxqSquare(square) {
+      return COORDINATES_DPXQ[square]
     }
     
     // print pseudo legal move list
@@ -1703,6 +1731,8 @@ var Engine = function() {
       moveStack: function () { return moveStack; },
       moveFromString: function(moveString) { return moveFromString(moveString); },
       moveToString: function(move) { return moveToString(move); },
+      moveToDPXQ: function(move) { return moveToDPXQ(move); },
+      dpxqSquare: function(square) { return dpxqSquare(square); },
       getSourceSquare: function(move) { return getSourceSquare(move); },
       getTargetSquare: function(move) { return getTargetSquare(move); },
       getCaptureFlag: function(move) { return getCaptureFlag(move); },

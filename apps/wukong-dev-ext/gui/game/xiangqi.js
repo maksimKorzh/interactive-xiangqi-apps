@@ -13,6 +13,56 @@ var engine = new Engine();
 console.log('\n  Wukong JS - BROWSER MODE - v' + engine.VERSION);
 console.log('  type "engine" for public API reference');
 
+/****************************\
+ ============================
+
+         DPXQ helpers
+
+ ============================              
+\****************************/
+
+// DPXQ board (for movelist purposes)
+var boardDPXQ = [];
+
+function dpxqInit() {
+  boardDPXQ = [
+    'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x',
+    'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x',
+    'x', 'r1','n1','b1','a1','k', 'a2','b2','n2','r2','x',
+    'x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x',
+    'x', '.', 'c1', '.','.', '.', '.', '.','c2', '.', 'x',
+    'x', 'p1','.', 'p2','.', 'p3','.', 'p4','.', 'p5','x',
+    'x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x',
+    'x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x',
+    'x', 'P5','.', 'P4','.', 'P3','.', 'P2','.', 'P1','x',
+    'x', '.', 'C2', '.','.', '.', '.', '.', 'C1','.', 'x',
+    'x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x',
+    'x', 'R2','N2','B2','A2','K', 'A1','B1','N1','R1','x',
+    'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x',
+    'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'
+  ];
+} dpxqInit();
+
+var dpxqPieceOrder = [
+  'R1', 'N1', 'B1', 'A1', 'K', 'A2', 'B2', 'N2', 'R2', 'C1', 'C2', 'P1', 'P2', 'P3', 'P4', 'P5',
+  'r1', 'n1', 'b1', 'a1', 'k', 'a2', 'b2', 'n2', 'r2', 'c1', 'c2', 'p1', 'p2', 'p3', 'p4', 'p5',
+];
+
+function updateDPXQ(from, to) {
+  boardDPXQ[to] = boardDPXQ[from];
+  boardDPXQ[from] = '.';
+}
+
+function dpxqPieceList() {
+  let pieceList = {};
+  for (let i = 0; i < dpxqPieceOrder.length; i++) pieceList[dpxqPieceOrder[i]] = '99';
+  for (let x = 0; x < dpxqPieceOrder.length; x++) {
+    for (let i = 0; i < boardDPXQ.length; i++) {
+      let piece = boardDPXQ[i];
+      if (piece == dpxqPieceOrder[x]) pieceList[dpxqPieceOrder[x]] = engine.dpxqSquare(i);
+    }
+  } return Object.values(pieceList).join('')  
+}
 
 /****************************\
  ============================
@@ -367,7 +417,7 @@ function think() {
 function movePiece(userSource, userTarget) {
   let moveString = engine.squareToString(userSource) +
                    engine.squareToString(userTarget);
-
+    
   if (isGameOver() == 0) engine.loadMoves(moveString);
   else updatePgn();
   drawBoard();
@@ -404,17 +454,23 @@ function validateMove(userSource, userTarget) {
 function getGamePgn() {
   let moveStack = engine.moveStack();
   let pgn = '';
-
+  dpxqInit();
+  
   for (let index = 0; index < moveStack.length; index++) {
     let move = moveStack[index].move;
     let moveScore = moveStack[index].score;
     let moveDepth = moveStack[index].depth;
     let moveTime = moveStack[index].time;
     let movePv = moveStack[index].pv;
-    let moveString = engine.moveToString(move);
+    
+    
+    let dpxqMove = engine.moveToDPXQ(move);
+    let dpxqPieces = dpxqPieceList();
+    let moveString = getMovelistString(dpxqMove, dpxqPieces);
+    updateDPXQ(engine.getSourceSquare(move), engine.getTargetSquare(move));
+    
     let moveNumber = ((index % 2) ? '': ((index / 2 + 1) + '. '));
     let displayScore = (((moveScore / 100) == 0) ? '-0.00' : (moveScore / 100)) + '/' + moveDepth + ' ';
-    
     if (displayScore.toString().includes('NaN') && moveScore.includes('M'))
       displayScore = moveScore.replace('M', 'mate in ') + ' # ';
     
@@ -422,7 +478,7 @@ function getGamePgn() {
                 (moveDepth ? ((moveScore > 0) ? ('+' + displayScore) : displayScore): '') +
                 Math.round(moveTime / 1000);
     
-    let nextMove = moveNumber + moveString + (moveTime ? ' {' + stats + '}' : '');
+    let nextMove = moveNumber + moveString;// + (moveTime ? ' {' + stats + '}' : '');
     
     pgn += nextMove + ' ';
     userTime = 0;      
@@ -445,6 +501,30 @@ function updatePgn() {
   }
   
   gameMoves.scrollTop = gameMoves.scrollHeight;
+  updateMoveList();
+
+  if (isGameOver()) {
+    let moveList = document.getElementById('moveList');
+    moveList.innerHTML += '<li class="list-group-item text-right">' + gameResult + '</li>';
+    moveList.scrollTop = moveList.scrollHeight;
+  }    
+}
+
+// update move list
+function updateMoveList() {
+  let pgn = getGamePgn().split(' ').slice(0, -1);
+  let moveList = document.getElementById('moveList');
+  moveList.innerHTML = '';
+  
+  for (let i = 0; i < pgn.length; i++) {
+    if (pgn[i][1] == '.' || pgn[i][2] == '.' || pgn[i][3] == '.') {
+      moveList.innerHTML += '<li class="list-group-item text-right">' + pgn[i] + pgn[i + 1] + '</li>';
+      i++;
+    } else
+      moveList.innerHTML += '<li class="list-group-item text-right">' + pgn[i] + '</li>';
+  }
+  
+  moveList.scrollTop = moveList.scrollHeight;
 }
 
 // download PGN

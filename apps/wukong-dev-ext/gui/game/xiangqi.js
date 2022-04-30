@@ -505,7 +505,7 @@ function updatePgn() {
 
   if (isGameOver()) {
     let moveList = document.getElementById('moveList');
-    moveList.innerHTML += '<li class="list-group-item text-right">' + gameResult + '</li>';
+    moveList.innerHTML += '<li class="list-group-item">' + gameResult + '</li>';
     moveList.scrollTop = moveList.scrollHeight;
   }    
 }
@@ -518,7 +518,8 @@ function updateMoveList() {
   
   for (let i = 0; i < pgn.length; i++) {
     if (pgn[i][1] == '.' || pgn[i][2] == '.' || pgn[i][3] == '.') {
-      moveList.innerHTML += '<li class="list-group-item text-right">' + pgn[i] + pgn[i + 1] + '</li>';
+      if (pgn[i].length < 3) moveList.innerHTML += '<li style="font-size: 15px;" class="list-group-item text-right">' + pgn[i] + pgn[i + 1] + '</li>';
+      else moveList.innerHTML += '<li style="font-size: 15px;" class="list-group-item text-left">' + pgn[i] + pgn[i + 1] + '</li>';
       i++;
     } else
       moveList.innerHTML += '<li class="list-group-item text-right">' + pgn[i] + '</li>';

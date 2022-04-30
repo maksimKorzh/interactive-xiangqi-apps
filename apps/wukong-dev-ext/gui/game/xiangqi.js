@@ -339,10 +339,10 @@ function getBookMove() {
 }
 
 // check for game state
-function isGameOver() {
-  if (engine.isRepetition()) repetitions++;
-  if (repetitions >= 3) {
-    gameResult = '3 fold repetition ' + (engine.getSide() ? 'black' : 'red') + ' lost';
+function isGameOver(reps) {
+  if (reps && engine.isRepetition()) repetitions++;
+  if (repetitions >= 6) {
+    gameResult = '3 fold repetition ' + (engine.getSide() ? 'red' : 'black') + ' lost';
     return 1;
   } else if (engine.generateLegalMoves().length == 0) {
     gameResult = (engine.getSide() ? '1-0' : '0-1') + ' mate';  
@@ -363,7 +363,7 @@ function isGameOver() {
 // engine move
 function think() {
   highlightCheck();
-  if (isGameOver()) {updatePgn(); return;}
+  if (isGameOver(true)) {updatePgn(); return;}
   if (document.getElementById('editMode').checked == true) return;
   engine.resetTimeControl();
 
@@ -579,6 +579,7 @@ function newGame() {
   engine.setBoard(engine.START_FEN);
   drawBoard();
   document.getElementById('pgn').value = '';
+  document.getElementById('moveList').innerHTML = '<li class="list-group-item">No Moves</li>';
   repetitions = 0;
 }
 

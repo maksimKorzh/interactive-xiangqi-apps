@@ -341,10 +341,10 @@ function getBookMove() {
 // check for game state
 function isGameOver(reps) {
   if (reps && engine.isRepetition()) repetitions++;
-  if (repetitions >= 6) {
+  /*if (repetitions >= 6) {
     gameResult = '3 fold repetition ' + (engine.getSide() ? 'red' : 'black') + ' lost';
     return 1;
-  } else if (engine.generateLegalMoves().length == 0) {
+  } else */if (engine.generateLegalMoves().length == 0) {
     gameResult = (engine.getSide() ? '1-0' : '0-1') + ' mate';  
     return 1;
   } else if (engine.getSixty() >= 120) {

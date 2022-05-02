@@ -78,7 +78,7 @@ Now it's available for free use in 3rd party websites.
       src="https://maksimkorzh.github.io/wukong-xiangqi/apps/game_viewer/gui/game_viewer.html">
     </iframe>
     
-    <!-- Play XIangqi with WXF notation movelist -->
+    <!-- Play Xiangqi with WXF notation movelist -->
     <iframe id="wukong-xiangqi"
       title="Wukong Xiangqi"
       width="580"
